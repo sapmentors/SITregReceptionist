@@ -2,6 +2,7 @@
 	controllerName="com.sap.sapmentors.sitreg.receptionist.controller.Detail"
 	xmlns="sap.m"
 	xmlns:t="sap.ui.table"
+	xmlns:ndc="sap.ndc"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:semantic="sap.m.semantic">
  
@@ -23,6 +24,16 @@
 				}"
 				numberUnit="{EventDate}">
 			</ObjectHeader>
+			<Toolbar>
+				<ToolbarSpacer></ToolbarSpacer>
+				<Label text="{i18n>scanTicket}" />
+				<ndc:BarcodeScannerButton 
+							text="{i18n>scanTicket}"
+							scanSuccess="scanSuccessCallback"
+							scanFail="scanFailCallback" />
+				<ToolbarSpacer></ToolbarSpacer>
+			</Toolbar>
+			<!--
 			<IconTabBar
 				id="iconTabBar"
 				class="sapUiResponsiveContentPadding">
@@ -34,11 +45,12 @@
 					</IconTabFilter>
 					<IconTabFilter
 						id="iconTabBarFilter2"
-						icon="sap-icon://attachment"
-						tooltip="{i18n>detailIconTabBarAttachments}">
+						icon="sap-icon://bar-code"
+						tooltip="{i18n>detailIconTabBarTicket}">
+				
 					</IconTabFilter>
 				</items>
-			</IconTabBar>
+			</IconTabBar> -->
 			<Table
 				id="lineItemsList"
 				width="auto"
@@ -87,9 +99,6 @@
 		</semantic:content>
 
 		<semantic:sendEmailAction>
-			<semantic:SendEmailAction
-				id="shareEmail"
-				press="onShareEmailPress"/>
 		</semantic:sendEmailAction>
 
 	</semantic:DetailPage>
