@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>SITreg Receptionist</title>
+
+	<!-- Bootstrapping UI5 -->
+	<script id="sap-ui-bootstrap"
+			src="resources/sap-ui-core.js"
+			data-sap-ui-libs="sap.m"
+			data-sap-ui-theme="sap_bluecrystal"
+			data-sap-ui-compatVersion="edge"
+			data-sap-ui-resourceroots='{"com.sap.sapmentors.sitreg.receptionist": "."}'
+			data-sap-ui-frameOptions="trusted">
+	</script>
+
+	<script>
+		sap.ui.getCore().attachInit(function () {
+			sap.ui.require([
+				"sap/m/Shell",
+				"sap/ui/core/ComponentContainer"
+			], function (Shell, ComponentContainer) {
+				// initialize the UI component
+				new Shell({
+					app: new ComponentContainer({
+						height : "100%",
+						name : "com.sap.sapmentors.sitreg.receptionist"
+					})
+				}).placeAt("content");
+			});
+		});
+	</script>
+
+<script src='https://webide-s0001142741trial.dispatcher.hanatrial.ondemand.com/plugins/pluginrepository/hybrid/cordovafacade/floatingButton.js'></script>
+<style>.facadebtn{display:inline-block;width:60px;height:60px;background-color:#009de0;border-radius:50px;text-align:center;box-shadow: 2px 2px 3px #999;opacity:.3;}
+.facadebtn .sapUiIcon{color:#FFF;font-size:1.5rem;cursor:pointer;line-height:60px;width:60px;}
+.facadebtn:hover{opacity:1;}</style>
+<script src='https://webide-s0001142741trial.dispatcher.hanatrial.ondemand.com/plugins/pluginrepository/hybrid/cordovafacade/cordova.js' data-original-url='index.html'></script>
+<style>#interactive.viewport video{width:320px;height:240px;}
+#interactive.viewport .drawingBuffer{width:320px;height:240px;position:absolute;}</style>
+<script src="https://webide-s0001142741trial.dispatcher.hanatrial.ondemand.com/plugins/pluginrepository/hybrid/mobileextend/MessageDef.js" type="text/javascript"></script><script src="https://webide-s0001142741trial.dispatcher.hanatrial.ondemand.com/plugins/pluginrepository/hybrid/mobileextend/MessageBridge.js" type="text/javascript"></script><link href="https://webide-s0001142741trial.dispatcher.hanatrial.ondemand.com/plugins/pluginrepository/hybrid/css/mobileExtend.css"  rel="stylesheet" type="text/css"></link></head>
+
+<!-- UI Content -->
+<body class="sapUiBody" id="content">
+</body>
+</html>
