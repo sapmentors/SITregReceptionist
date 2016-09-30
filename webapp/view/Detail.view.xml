@@ -83,6 +83,9 @@
 						hAlign="Right">
 						<Text text="{i18n>detailLineItemTableUnitNumberColumn}"/>
 					</Column>
+					<Column>
+						<Text text="{i18n>checkIn}" />	
+					</Column>
 				</columns>
 				<items>
 					<ColumnListItem>
@@ -92,7 +95,9 @@
 								text="{ID}"/>
 							<ObjectNumber
 								unit="{RSVP}"/>
+								<Button id="checkInManually" text="{i18n>checkIn}" type="Accept" press="checkInManually" enabled="true" />
 						</cells>
+						
 					</ColumnListItem>
 				</items>
 			</Table>
