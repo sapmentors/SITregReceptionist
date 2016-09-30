@@ -1,6 +1,7 @@
 <mvc:View
 	controllerName="com.sap.sapmentors.sitreg.receptionist.controller.Detail"
 	xmlns="sap.m"
+	xmlns:t="sap.ui.table"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:semantic="sap.m.semantic">
 
@@ -51,7 +52,14 @@
 						<Title
 							id="lineItemsHeader"
 							text="{detailView>/lineItemListTitle}"/>
+						<SearchField 
+							id="searchField" 
+							tooltip="{i18n>participantSearchTooltip}"
+							search="onSearch"
+							width="auto">
+						</SearchField>	
 					</Toolbar>
+
 				</headerToolbar>
 				<columns>
 					<Column>

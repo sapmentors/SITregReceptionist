@@ -2,8 +2,10 @@
 sap.ui.define([
 		"com/sap/sapmentors/sitreg/receptionist/controller/BaseController",
 		"sap/ui/model/json/JSONModel",
-		"com/sap/sapmentors/sitreg/receptionist/model/formatter"
-	], function (BaseController, JSONModel, formatter) {
+		"com/sap/sapmentors/sitreg/receptionist/model/formatter",
+		"sap/ui/model/Filter",
+		"sap/ui/model/FilterOperator"
+	], function (BaseController, JSONModel, formatter, Filter, FilterOperator) {
 		"use strict";
 
 		return BaseController.extend("com.sap.sapmentors.sitreg.receptionist.controller.Detail", {
@@ -23,18 +25,62 @@ sap.ui.define([
 					delay : 0,
 					lineItemListTitle : this.getResourceBundle().getText("detailLineItemTableHeading")
 				});
-
+				
+				var oTable = this.byId("lineItemsList");
+				this._oTable = oTable;
+				this._oTableSearchState = [];
+				
 				this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
 
 				this.setModel(oViewModel, "detailView");
 
 				this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
 			},
-
+			
+		
 			/* =========================================================== */
 			/* event handlers                                              */
 			/* =========================================================== */
+			onSearch : function (oEvent) {
+				if (oEvent.getParameters().refreshButtonPressed) {
+					// Search field's 'refresh' button has been pressed.
+					// This is visible if you select any master list item.
+					// In this case no new search is triggered, we only
+					// refresh the list binding.
+					this.onRefresh();
+				} else {
+					var oTableSearchState = [];
+					var sQuery = oEvent.getParameter("query");
 
+					if (sQuery && sQuery.length > 0) {
+						oTableSearchState = [new Filter("FirstName", FilterOperator.Contains, sQuery)];
+					}
+					this._applySearch(oTableSearchState);
+				}
+
+			},
+
+			/**
+			 * Event handler for refresh event. Keeps filter, sort
+			 * and group settings and refreshes the list binding.
+			 * @public
+			 */
+			onRefresh : function () {
+				this._oTable.getBinding("items").refresh();
+			},
+						/**
+			 * Internal helper method to apply both filter and search state together on the list binding
+			 * @param {object} oTableSearchState an array of filters for the search
+			 * @private
+			 */
+			_applySearch: function(oTableSearchState) {
+				var oViewModel = this.getModel("detailView");
+				this._oTable.getBinding("items").filter(oTableSearchState, "Application");
+				// changes the noDataText of the list in case there are no filter results
+				if (oTableSearchState.length !== 0) {
+					oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("notFoundTitle"));
+				}
+			},
 			/**
 			 * Event handler when the share by E-Mail button has been clicked
 			 * @public
