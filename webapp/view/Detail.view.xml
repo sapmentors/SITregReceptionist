@@ -4,7 +4,7 @@
 	xmlns:t="sap.ui.table"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:semantic="sap.m.semantic">
-
+ 
 	<semantic:DetailPage
 		id="page"
 		navButtonPress="onNavBack"

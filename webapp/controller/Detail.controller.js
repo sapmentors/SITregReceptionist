@@ -9,7 +9,7 @@ sap.ui.define([
 		"use strict";
 
 		return BaseController.extend("com.sap.sapmentors.sitreg.receptionist.controller.Detail", {
-
+ 
 			formatter: formatter,
 
 			/* =========================================================== */
