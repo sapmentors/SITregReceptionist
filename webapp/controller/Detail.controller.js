@@ -53,7 +53,7 @@ sap.ui.define([
 					var sQuery = oEvent.getParameter("query");
 
 					if (sQuery && sQuery.length > 0) {
-						oTableSearchState = [new Filter("FirstName", FilterOperator.Contains, sQuery)];
+						oTableSearchState = [new Filter("tolower(FirstName)", FilterOperator.Contains, "'" + sQuery.toLowerCase() + "'")];
 					}
 					this._applySearch(oTableSearchState);
 				}
