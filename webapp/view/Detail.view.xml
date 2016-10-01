@@ -32,28 +32,12 @@
 							scanSuccess="scanSuccessCallback"
 							scanFail="scanFailCallback" />
 			</Toolbar>
-			<!--
-			<IconTabBar
-				id="iconTabBar"
-				class="sapUiResponsiveContentPadding">
-				<items>
-					<IconTabFilter
-						id="iconTabBarFilter1"
-						icon="sap-icon://hint"
-						tooltip="{i18n>detailIconTabBarInfo}">
-					</IconTabFilter>
-					<IconTabFilter
-						id="iconTabBarFilter2"
-						icon="sap-icon://bar-code"
-						tooltip="{i18n>detailIconTabBarTicket}">
-				
-					</IconTabFilter>
-				</items>
-			</IconTabBar> -->
+
 			<Table
 				id="lineItemsList"
 				width="auto"
-				items="{Participants}"
+				items="{ path: 'Participants',
+						 parameters: { expand: 'EventTicket' } }"
 				updateFinished="onListUpdateFinished"
 				noDataText="{i18n>detailLineItemTableNoDataText}"
 				busyIndicatorDelay="{detailView>/lineItemTableDelay}"
@@ -94,7 +78,7 @@
 								text="{ID}"/>
 							<ObjectNumber
 								unit="{RSVP}"/>
-								<Button id="checkInManually" text="{i18n>checkIn}" type="Accept" press="checkInManually" enabled="true" />
+							<Button id ="checkInManually" text="{= ${EventTicket/TicketUsed} === 'Y' ? ${i18n>checkInAlready} : ${i18n>checkIn} }" type="{= ${EventTicket/TicketUsed} === 'Y' ? 'Reject' : 'Accept' }" press="checkInManually" enabled="true" />
 						</cells>
 						
 					</ColumnListItem>
