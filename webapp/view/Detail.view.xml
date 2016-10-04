@@ -37,7 +37,7 @@
 				id="lineItemsList"
 				width="auto"
 				items="{ path: 'Participants',
-						 parameters: { expand: 'EventTicket' } }"
+						 parameters: { expand: 'Ticket' } }"
 				updateFinished="onListUpdateFinished"
 				noDataText="{i18n>detailLineItemTableNoDataText}"
 				busyIndicatorDelay="{detailView>/lineItemTableDelay}"
@@ -78,7 +78,7 @@
 								text="{ID}"/>
 							<ObjectNumber
 								unit="{RSVP}"/>
-							<Button id ="checkInManually" text="{= ${EventTicket/TicketUsed} === 'Y' ? ${i18n>checkInAlready} : ${i18n>checkIn} }" type="{= ${EventTicket/TicketUsed} === 'Y' ? 'Reject' : 'Accept' }" press="checkInManually" enabled="true" />
+							<Button id ="checkInManually" text="{= ${Ticket/TicketUsed} === 'Y' ? ${i18n>checkInAlready} : ${i18n>checkIn} }" type="{= ${Ticket/TicketUsed} === 'Y' ? 'Reject' : 'Accept' }" press="checkInManually" enabled="true" />
 						</cells>
 						
 					</ColumnListItem>
