@@ -38,6 +38,9 @@
 						path: 'Location',
 						descending: false
 						},
+					parameters:{
+						expand:'RegistrationNumbers'
+					},
 					groupHeaderFactory: '.createGroupHeader'
 				}"
 				busyIndicatorDelay="{masterView>/delay}"
@@ -64,10 +67,24 @@
 						press="onSelectionChange"
 						title="{Location}"
 						number="{
-							path: 'MaxParticipants',
-							formatter: '.formatter.currencyValue'
-						}"
-						numberUnit="{EventDate}">
+								path: 'EventDate',
+								type: 'sap.ui.model.type.Date',
+								formatOptions: {
+									style: 'medium'
+								}
+							}">
+						<attributes>
+							<ObjectAttribute 
+								id="registrationNumbers" 
+								text="{
+									parts: [
+										{path: 'MaxParticipants'},
+										{path: 'RegistrationNumbers/Participants'},
+										{path: 'RegistrationNumbers/Free'}
+									],
+									formatter : '.formatter.registrationNumbers'
+								}" />
+						</attributes>
 					</ObjectListItem>
 				</items>
 			</List>

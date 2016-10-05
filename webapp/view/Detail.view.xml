@@ -18,11 +18,7 @@
 			<ObjectHeader
 				id="objectHeader"
 				title="{Location}"
-				number="{
-					path: 'MaxParticipants',
-					formatter: '.formatter.currencyValue'
-				}"
-				numberUnit="{EventDate}">
+				number="{ path: 'EventDate', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' } }">
 			</ObjectHeader>
 			<Toolbar>
 				<ToolbarSpacer></ToolbarSpacer>
@@ -74,7 +70,7 @@
 					<ColumnListItem>
 						<cells>
 							<ObjectIdentifier
-								title="{FirstName}"
+								title="{FirstName} {LastName}"
 								text="{ID}"/>
 							<ObjectNumber
 								unit="{RSVP}"/>
