@@ -101,7 +101,7 @@ sap.ui.define([
 			 * @private
 			 */
 			checkInManually : function(oEvent) {
-				var that = this;
+		
 				var sPath =  oEvent.getSource().getBindingContext().getPath();
 				var oButton = this.byId(oEvent.getParameter("id"));
 				
@@ -109,17 +109,12 @@ sap.ui.define([
 					var oModel = this.getModel();
 					var Ticket = oModel.getProperty(sPath + "/Ticket");
 					Ticket.TicketUsed = 'M';
-					oModel.setProperty(sPath + "/Ticket", Ticket);
-					console.log(Ticket);
-					oModel.submitChanges( function(oData, response) { that.showPopup("Item data has been saved"); },
-										  function(oError) { alert(oError.message); } 
-										);
-					// this.getModel().update("/Ticket", Ticket, {
-					// 	async : true,
-					// 	merge : true,
-					// 	success : function(oData, response) { that.showPopup("Item data has been saved"); },
-					// 	error : function(oError) { alert(oError.message);}
-					// 	});
+					this.getModel().update("/Ticket(" + Ticket.ParticipantID + ")", Ticket, {
+						async : true,
+						merge : true,
+						success : function(oData, response) { },
+						error : function(oError) { alert(oError.message);}
+						});
 				}
 			},
 			
