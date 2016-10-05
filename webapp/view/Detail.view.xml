@@ -1,7 +1,6 @@
 <mvc:View
 	controllerName="com.sap.sapmentors.sitreg.receptionist.controller.Detail"
 	xmlns="sap.m"
-	xmlns:t="sap.ui.table"
 	xmlns:ndc="sap.ndc"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:semantic="sap.m.semantic">
