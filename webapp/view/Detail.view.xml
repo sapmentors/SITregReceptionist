@@ -14,6 +14,10 @@
 		busyIndicatorDelay="{detailView>/delay}">
 
 		<semantic:content>
+			<PullToRefresh
+				id="pullToRefresh"
+				visible="{device>/support/touch}"
+				refresh="onRefresh" />
 			<ObjectHeader
 				id="objectHeader"
 				title="{Location}"
@@ -24,8 +28,8 @@
 				<Label text="{i18n>scanTicket}" />
 				<ndc:BarcodeScannerButton 
 							text="{i18n>scanTicket}"
-							scanSuccess="scanSuccessCallback"
-							scanFail="scanFailCallback" />
+							scanSuccess="checkInQRSuccess"
+							scanFail="checkInQRFailed" />
 			</Toolbar>
 
 			<Table

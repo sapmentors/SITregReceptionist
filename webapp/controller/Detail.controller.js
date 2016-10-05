@@ -1,11 +1,12 @@
 /*global location */
 sap.ui.define([
 		"com/sap/sapmentors/sitreg/receptionist/controller/BaseController",
+		"sap/m/MessageToast",
 		"sap/ui/model/json/JSONModel",
 		"com/sap/sapmentors/sitreg/receptionist/model/formatter",
 		"sap/ui/model/Filter",
 		"sap/ui/model/FilterOperator"
-	], function (BaseController, JSONModel, formatter, Filter, FilterOperator) {
+	], function (BaseController, MessageToast, JSONModel, formatter, Filter, FilterOperator) {
 		"use strict";
 
 		return BaseController.extend("com.sap.sapmentors.sitreg.receptionist.controller.Detail", {
@@ -42,6 +43,7 @@ sap.ui.define([
 			/* event handlers                                              */
 			/* =========================================================== */
 			onSearch : function (oEvent) {
+				this._MessageToast("hallo");
 				if (oEvent.getParameters().refreshButtonPressed) {
 					// Search field's 'refresh' button has been pressed.
 					// This is visible if you select any master list item.
@@ -60,13 +62,17 @@ sap.ui.define([
 
 			},
 
+
 			/**
 			 * Event handler for refresh event. Keeps filter, sort
 			 * and group settings and refreshes the list binding.
 			 * @public
 			 */
-			onRefresh : function () {
+			onRefresh : function (oEvent) {
+				var oPullToRefresh = this.byId("pullToRefresh");
+				oPullToRefresh.hide();
 				this._oTable.getBinding("items").refresh();
+				
 			},
 						/**
 			 * Internal helper method to apply both filter and search state together on the list binding
@@ -117,7 +123,49 @@ sap.ui.define([
 						});
 				}
 			},
+		
+			checkInQRSuccess: function(oEvent) {
+				var QRCode = oEvent.mParameters.text;
+				this._checkDiscountCode(QRCode);
+			},
+			checkInQRFailed: function(oEvent) {
+				return;
+				// var discountCode = result.mParameters.text;
+				// this._checkDiscountCode(discountCode);
+			},
 			
+			_checkDiscountCode: function(QRCode) {
+	
+			var checkUrl = "/HANAMDC/com/sap/sapmentors/sitreg/odatareceptionist/checkTicket.xsjs";
+			/** @type sap.ui.model.odata.ODataModel */
+			this.model = this.getView().getModel();
+			var token = this.model.getSecurityToken();
+			/** @type sap.ui.model.json.JSONModel */
+			var oModel = new sap.ui.model.json.JSONModel();
+			var mHeaders = Array();
+			mHeaders["X-CSRF-Token"] = token;
+			var sData = "SHA256HASH=" + encodeURIComponent(QRCode);
+
+			oModel.attachRequestCompleted(this._discountCodeRequestCompleted.bind(this));
+			oModel.loadData(checkUrl, sData, true, 'GET', false, false, mHeaders);
+			},
+			
+			_discountCodeRequestCompleted: function(oEvent) {
+				/** @type sap.ui.model.json.JSONModel */
+				// this._MessageToast(this.getResourceBundle().getText("scanSucessful"));
+				var model = oEvent.getSource();
+				var Ticket = model.getProperty("/OUTC"[0]);
+				console.log(Ticket);
+				Ticket.TicketUsed = 'Y';
+				this.getModel().update("/Ticket(" + Ticket.ParticipantID + ")", Ticket, {
+						async : true,
+						merge : true,
+						success : function(oData, response) { this._MessageToast("scanSuccessful"); },
+						error : function(oError) { alert(oError.message);}
+						});
+				
+
+		},
 			/**
 			 * Updates the item count within the line item table's header
 			 * @param {object} oEvent an event containing the total number of items in the list
@@ -237,6 +285,12 @@ sap.ui.define([
 				oViewModel.setProperty("/busy", true);
 				// Restore original busy indicator delay for the detail view
 				oViewModel.setProperty("/delay", iOriginalViewBusyDelay);
+			},
+			
+			_MessageToast: function(sMessage) {
+	    		MessageToast.show(sMessage, {
+    				duration: 6000
+	    		});
 			}
 
 		});
