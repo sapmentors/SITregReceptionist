@@ -94,8 +94,35 @@ sap.ui.define([
 					oViewModel.getProperty("/shareSendEmailMessage")
 				);
 			},
-
-
+			
+			/**
+			 * Check an Participant in for the event
+			 * @param {object} oEvent an event clicking the check-in button
+			 * @private
+			 */
+			checkInManually : function(oEvent) {
+				var that = this;
+				var sPath =  oEvent.getSource().getBindingContext().getPath();
+				var oButton = this.byId(oEvent.getParameter("id"));
+				
+				if (oButton.mProperties.type === 'Accept') {
+					var oModel = this.getModel();
+					var Ticket = oModel.getProperty(sPath + "/Ticket");
+					Ticket.TicketUsed = 'M';
+					oModel.setProperty(sPath + "/Ticket", Ticket);
+					console.log(Ticket);
+					oModel.submitChanges( function(oData, response) { that.showPopup("Item data has been saved"); },
+										  function(oError) { alert(oError.message); } 
+										);
+					// this.getModel().update("/Ticket", Ticket, {
+					// 	async : true,
+					// 	merge : true,
+					// 	success : function(oData, response) { that.showPopup("Item data has been saved"); },
+					// 	error : function(oError) { alert(oError.message);}
+					// 	});
+				}
+			},
+			
 			/**
 			 * Updates the item count within the line item table's header
 			 * @param {object} oEvent an event containing the total number of items in the list

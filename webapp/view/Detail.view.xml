@@ -78,7 +78,7 @@
 								text="{ID}"/>
 							<ObjectNumber
 								unit="{RSVP}"/>
-							<Button id ="checkInManually" text="{= ${Ticket/TicketUsed} === 'Y' ? ${i18n>checkInAlready} : ${i18n>checkIn} }" type="{= ${Ticket/TicketUsed} === 'Y' ? 'Reject' : 'Accept' }" press="checkInManually" enabled="true" />
+							<Button id ="checkInManually" text="{= ${Ticket/TicketUsed} !== 'N' ? ${i18n>checkInAlready} : ${i18n>checkIn} }" type="{= ${Ticket/TicketUsed} !== 'N' ? 'Reject' : 'Accept' }" press="checkInManually" enabled="true" />
 						</cells>
 						
 					</ColumnListItem>
