@@ -43,7 +43,6 @@ sap.ui.define([
 			/* event handlers                                              */
 			/* =========================================================== */
 			onSearch : function (oEvent) {
-				this._MessageToast("hallo");
 				if (oEvent.getParameters().refreshButtonPressed) {
 					// Search field's 'refresh' button has been pressed.
 					// This is visible if you select any master list item.
@@ -181,7 +180,7 @@ sap.ui.define([
 			  }
 			
 			  // Deal with the remaining bytes and padding
-			  if (byteRemainder == 1) {
+			  if (byteRemainder === 1) {
 			    chunk = bytes[mainLength];
 			
 			    a = (chunk & 252) >> 2; // 252 = (2^6 - 1) << 2
@@ -210,12 +209,25 @@ sap.ui.define([
 				/** @type sap.ui.model.json.JSONModel */
 				var model = oEvent.getSource();
 				var Ticket = model.getProperty("/OUTC")[0];
+			
 				if (Ticket.TicketUsed === 'N') {
-					Ticket.TicketUsed = 'Y';
-					Ticket.SHA256HASH = encodeURIComponent(this.base64ArrayBuffer(Ticket.SHA256HASH));
-					this.getModel().update("/Ticket(" + Ticket.ParticipantID + ")", Ticket, {
+					
+					// Datevalues in History hinder the update
+					// Create a new JSON Ticket with relevant data
+					var newTicket = {
+						'ParticipantID' : Ticket.ParticipantID,
+						'EventID'		: Ticket.EventID,
+						'SHA256HASH'	: this.base64ArrayBuffer(Ticket.SHA256HASH)
+					};	
+					
+					this.getModel().update("/Ticket(" + Ticket.ParticipantID + ")", newTicket, {
 						async : true,
-						success : function(oData, response) { that._MessageToast("scanSuccessful"); },
+						success : function(oData, response) { 
+																// Scan Successful
+																that._MessageToast(that.getResourceBundle().getText("scanSuccessful"));
+																// Refresh the Table
+																that.onRefresh();
+															},
 						error : function(oError) { console.log(oError); }
 						} );
 				}
