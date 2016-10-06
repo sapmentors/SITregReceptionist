@@ -145,27 +145,81 @@ sap.ui.define([
 			var mHeaders = Array();
 			mHeaders["X-CSRF-Token"] = token;
 			var sData = "SHA256HASH=" + encodeURIComponent(QRCode);
-
 			oModel.attachRequestCompleted(this._discountCodeRequestCompleted.bind(this));
 			oModel.loadData(checkUrl, sData, true, 'GET', false, false, mHeaders);
 			},
 			
+			/**
+			 * Transforms the ArrayBuffer to a Base64 encoded string
+			 * Thx to John Leighton https://gist.github.com/jonleighton/958841#file-gistfile1-js
+			 **/
+			base64ArrayBuffer: function(arrayBuffer) {
+			  var base64    = '';
+			  var encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+			
+			  var bytes         = new Uint8Array(arrayBuffer);
+			  var byteLength    = bytes.byteLength;
+			  var byteRemainder = byteLength % 3;
+			  var mainLength    = byteLength - byteRemainder;
+			
+			  var a, b, c, d;
+			  var chunk;
+			
+			  // Main loop deals with bytes in chunks of 3
+			  for (var i = 0; i < mainLength; i = i + 3) {
+			    // Combine the three bytes into a single integer
+			    chunk = (bytes[i] << 16) | (bytes[i + 1] << 8) | bytes[i + 2];
+			
+			    // Use bitmasks to extract 6-bit segments from the triplet
+			    a = (chunk & 16515072) >> 18; // 16515072 = (2^6 - 1) << 18
+			    b = (chunk & 258048)   >> 12; // 258048   = (2^6 - 1) << 12
+			    c = (chunk & 4032)     >>  6; // 4032     = (2^6 - 1) << 6
+			    d = chunk & 63;               // 63       = 2^6 - 1
+			
+			    // Convert the raw binary segments to the appropriate ASCII encoding
+			    base64 += encodings[a] + encodings[b] + encodings[c] + encodings[d];
+			  }
+			
+			  // Deal with the remaining bytes and padding
+			  if (byteRemainder == 1) {
+			    chunk = bytes[mainLength];
+			
+			    a = (chunk & 252) >> 2; // 252 = (2^6 - 1) << 2
+			
+			    // Set the 4 least significant bits to zero
+			    b = (chunk & 3)   << 4; // 3   = 2^2 - 1
+			
+			    base64 += encodings[a] + encodings[b] + '==';
+			  } else if (byteRemainder == 2) {
+			    chunk = (bytes[mainLength] << 8) | bytes[mainLength + 1];
+			
+			    a = (chunk & 64512) >> 10; // 64512 = (2^6 - 1) << 10
+			    b = (chunk & 1008)  >>  4; // 1008  = (2^6 - 1) << 4
+			
+			    // Set the 2 least significant bits to zero
+			    c = (chunk & 15)    <<  2; // 15    = 2^4 - 1
+			
+			    base64 += encodings[a] + encodings[b] + encodings[c] + '=';
+			  }
+			  
+			return base64;
+			},
+			
 			_discountCodeRequestCompleted: function(oEvent) {
+				var that = this;
 				/** @type sap.ui.model.json.JSONModel */
-				// this._MessageToast(this.getResourceBundle().getText("scanSucessful"));
 				var model = oEvent.getSource();
-				var Ticket = model.getProperty("/OUTC"[0]);
-				console.log(Ticket);
-				Ticket.TicketUsed = 'Y';
-				this.getModel().update("/Ticket(" + Ticket.ParticipantID + ")", Ticket, {
+				var Ticket = model.getProperty("/OUTC")[0];
+				if (Ticket.TicketUsed === 'N') {
+					Ticket.TicketUsed = 'Y';
+					Ticket.SHA256HASH = encodeURIComponent(this.base64ArrayBuffer(Ticket.SHA256HASH));
+					this.getModel().update("/Ticket(" + Ticket.ParticipantID + ")", Ticket, {
 						async : true,
-						merge : true,
-						success : function(oData, response) { this._MessageToast("scanSuccessful"); },
-						error : function(oError) { alert(oError.message);}
-						});
-				
-
-		},
+						success : function(oData, response) { that._MessageToast("scanSuccessful"); },
+						error : function(oError) { console.log(oError); }
+						} );
+				}
+			},
 			/**
 			 * Updates the item count within the line item table's header
 			 * @param {object} oEvent an event containing the total number of items in the list
