@@ -45,8 +45,8 @@
     }
   ],
   "mockpreview": {
-    "mockUri": "/HANAMDC/com/sap/sapmentors/sitreg/odatareceptionist/service.xsodata",
-    "metadataFilePath": "",
+    "mockUri": "/HANAMDC/com/sap/sapmentors/sitreg/odatareceptionist/service.xsodata/",
+    "metadataFilePath": "localService/metadata.xml",
     "loadJSONFiles": false,
     "loadCustomRequests": false,
     "mockRequestsFilePath": ""
