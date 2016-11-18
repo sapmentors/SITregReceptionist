@@ -15,7 +15,7 @@
       "test.html"
     ],
     "buildRequired": false,
-    "lastBuildDateTime": "Wed, 05 Oct 2016 10:33:21 GMT"
+    "lastBuildDateTime": "Fri, 18 Nov 2016 09:38:38 GMT"
   },
   "dataBinding": {
     "/webapp/view/App.view.xml": {
@@ -397,8 +397,8 @@
     }
   },
   "hcpdeploy": {
-    "account": "p1490151543trial",
+    "account": "s0001142741trial",
     "name": "sitregreceptionist",
-    "lastVersionWeTriedToDeploy": "1.0.2"
+    "lastVersionWeTriedToDeploy": "0.0.8"
   }
 }

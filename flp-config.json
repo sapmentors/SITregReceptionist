@@ -1,0 +1,34 @@
+{
+    "application": {
+        "id": "",
+        "title": "SITregReceptionist",
+        "type": "SAP_UI5_Component",
+        "componentUrl": "/",
+        "appUrl": "#SITregReceptionist-Display",
+        "navigationComponentName": "com.sap.sapmentors.sitreg.receptionist",
+        "intentSemanticObject": "SITregReceptionist",
+        "intentAction": "Display",
+        "html5ApplicationName": "sitregreceptionist",
+        "HCPParentApplicationName": ""
+    },
+    "assignment": {
+        "groups": [
+            "32f8e387-08a9-4bbe-85a0-85a9f150b241-1470925503005"
+        ],
+        "contentPackages": [
+            "c4a59908-9a88-4798-ab8a-4862190c49fc-1470925472184"
+        ],
+        "categories": []
+    },
+    "tile": {
+        "type": "StaticTile",
+        "title": "SITreg Receptionist",
+        "subtitle": "Check in Event Participants",
+        "searchKeywords": "SITreg Receptionist,Check in Event Participants",
+        "displayIconUrl": "sap-icon://approvals",
+        "displayInfoText": "",
+        "size": "1x1",
+        "serviceURL": "",
+        "refreshInterval": ""
+    }
+}
