@@ -110,7 +110,7 @@ sap.ui.define([
 				var sPath =  oEvent.getSource().getBindingContext().getPath();
 				var oButton = this.byId(oEvent.getParameter("id"));
 				
-				if (oButton.mProperties.type === 'Accept') {
+				if (oButton.mProperties.type === "Accept") {
 					var oModel = this.getModel();
 					var Ticket = oModel.getProperty(sPath + "/Ticket");
 					Ticket.TicketUsed = 'M';
