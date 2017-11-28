@@ -1,0 +1,16 @@
+_schema-version: "2.0.0"
+ID: "sitregreceptionist"
+version: 0.0.9
+
+parameters:
+  hcp-deployer-version: "1.0.0"
+
+modules:
+  - name: "sitregreceptionist"
+    type: html5
+    path: .
+    parameters:
+       version: 0.0.9-${timestamp}
+    build-parameters:
+      builder: grunt
+      build-result: dist
