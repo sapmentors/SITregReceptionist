@@ -1,7 +1,6 @@
 steps:
   mtaBuild:
     buildTarget: 'NEO'
-    mtaJarLocation: '/usr/sap/scp/mta.jar'
   neoDeploy:
     neoHome: '/usr/sap/scp/neo-java-web-sdk-3.81.16/'
     neo:
