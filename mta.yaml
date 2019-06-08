@@ -12,5 +12,10 @@ modules:
     parameters:
        version: 0.0.9-${timestamp}
     build-parameters:
-      builder: grunt
+      before-all:
+        builders:
+          - builder: custom
+            commands: 
+              - npm run build
+          - builder: npm
       build-result: dist
