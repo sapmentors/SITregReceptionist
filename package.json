@@ -1,22 +1,24 @@
 {
-	"name": "SITregReceptionist",
-	"version": "0.0.1",
-	"description": "SAP Event Registration - Front end for Receptionists",
-	"private": false,
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/sapmentors/SITregReceptionist.git"
-	},
-	"author": "SAP Mentors",
-	"license": "Apache-2.0",
-	"devDependencies": {
-		"@sap/grunt-sapui5-bestpractice-build": "^1.4.1",
-		"grunt": "^1.0.4",
-		"grunt-contrib-clean": "^1.1.0",
-		"grunt-contrib-copy": "^1.0.0",
-		"grunt-contrib-cssmin": "^2.2.1",
-		"grunt-contrib-uglify": "^3.3.0",
-		"grunt-mkdir": "^1.0.0",
-		"grunt-openui5": "^0.15.0"
-	}
+  "name": "sitregreceptionist",
+  "version": "0.0.1",
+  "description": "SAP Event Registration - Front end for Receptionists",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sapmentors/SITregReceptionist.git"
+  },
+  "scripts": {
+    "build": "ui5 build --include-task=generateManifestBundle generateCachebusterInfo"
+  },
+  "author": "SAP Mentors",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@ui5/cli": "^1.5.0",
+    "@sap/ui5-builder-webide-extension": "^1.0.2"
+  },
+  "ui5": {
+    "dependencies": [
+      "@sap/ui5-builder-webide-extension"
+    ]
+  }
 }
