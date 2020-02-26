@@ -2,7 +2,7 @@ steps:
   mtaBuild:
     buildTarget: 'NEO'
   neoDeploy:
-    neoHome: '/usr/sap/scp/neo-java-web-sdk-3.81.16/'
+    neoHome: '/usr/sap/scp/neo-java-web-sdk-3.99.14/'
     neo:
       credentialsId: 'HCP_S0001142741'
       account: 's0001142741trial'
